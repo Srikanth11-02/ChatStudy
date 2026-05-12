@@ -72,7 +72,66 @@ User authentication mechanisms are essential to ensure secure and authorized acc
 Client-server chat applications are versatile tools that facilitate real-time communication between users over a network. They incorporate various components, including server-side and client-side elements, and must consider factors such as security, scalability, and concurrency. As technology continues to advance, client-server chat applications remain integral for collaborative communication in various domains.
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
+## Algorithm:
+Client
+```
+import socket
 
+s = socket.socket()
+
+host = '127.0.0.1'
+port = 8080
+
+s.connect((host, port))
+
+print("Connected to chat server\n")
+
+while True:
+    incoming_message = s.recv(1024).decode()
+
+    print("Server:", incoming_message)
+    print()
+
+    message = input(">> ")
+
+    s.send(message.encode())
+
+    print("Sent\n")
+```
+Server
+```
+import socket
+
+s = socket.socket()
+
+host = '127.0.0.1'
+port = 8080
+
+s.bind((host, port))
+
+print("Server started on", host)
+print("Waiting for connection...\n")
+
+s.listen(1)
+
+conn, addr = s.accept()
+
+print(addr, "has connected to the server\n")
+
+while True:
+    message = input(">> ")
+
+    conn.send(message.encode())
+
+    print("Sent\n")
+
+    incoming_message = conn.recv(1024).decode()
+
+    print("Client:", incoming_message)
+    print()
+```
+## Output:
+<img width="1536" height="861" alt="image" src="https://github.com/user-attachments/assets/4b579375-f643-4461-9c70-c4397c2f5d2e" />
 
 ## Result:
 
